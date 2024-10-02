@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E'lonlar</title>
+
+    <style>
+        /* Reset default browser styles */
+        /* General styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container for the entire elonlar section */
+.elonlar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Styling each individual elon */
+.elonlar div {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px; /* Adjust width as necessary */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.elonlar div:hover {
+    transform: scale(1.05);
+}
+
+/* Styling for the image */
+.elonlar img {
+    width: 100%;
+    height: auto;
+    border-bottom: 3px solid #ff6347; /* Tomato color for a stylish look */
+}
+
+/* Styling for the titles */
+.elonlar h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 10px 0;
+    padding: 0 10px;
+
+}
+
+/* Styling for the description */
+.elonlar p {
+    font-size: 1em;
+    color: #666;
+    margin: 15px 20px;
+
+}
+
+/* Specific styling for the address and date */
+.elonlar p:last-of-type {
+    font-size: 0.9em;
+    color: #999;
+      font-style: italic;
+}
+
+.elonlar p:first-of-type {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #555;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style the navbar */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Logo styling */
+.navbar .logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Style the navigation links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for links */
+.nav-links a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Dropdown menu styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content li {
+    width: 100%;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    color: white;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-content a:hover {
+    background-color: #555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Announcements</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+
+            <li class="dropdown">
+                <a href="#">Categories >>></a>
+                <ul class="dropdown-content">
+                    {% for c in category %}
+                    <li><a href="{% url 'category' c.id %}">{{ c.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div class="elonlar">
+        {% for e in elonlar %}
+            <div class="elon-card">
+        <a href="{% url 'detail' e.id %}">
+                      {%  if e.image and e.image.url %}
+                      <img src="{{ e.image.url }}" alt="{{ e.title }}">
+                      {% else %}
+                      <img src="https://lh4.googleusercontent.com/proxy/EWm9FVpPqF7N5rcraSRF-UMDuwBzfkA2tYNH73WwfdaqqrhD7V-TQL22-XP7fOgbjSp4X836b8_TVTYw1JN7bSJuUHbgtMURdiA2n-lyFKYnnpRzFzCJ72kCEw" alt="Placeholder image" height="300">
+                      {% endif %}
+
+            <h2>{{ e.title }}</h2>
+        </a>
+            <p>{{ e.description|truncatewords:10 }}</p>
+            <h4>Address: {{ e.address }}</h4>
+            <p>Date: {{ e.added_time }}</p>
+            </div>
+        {% endfor %}
+</div>
+</body>
+</html>

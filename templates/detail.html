@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ elon.title }}</title>
+    <style>
+
+/* Style the navbar */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Logo styling */
+.navbar .logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Style the navigation links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for links */
+.nav-links a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Dropdown menu styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content li {
+    width: 100%;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    color: white;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-content a:hover {
+    background-color: #555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+}
+.elon {
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the box */
+    max-width: 70%; /* Max width for the content */
+    margin: 20px auto; /* Center the box */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    text-align: center; /* Center the text */
+}
+
+.elon img {
+    width: 50%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+.elon h1 {
+    font-size: 1.8em; /* Bigger font for the title */
+    color: #333; /* Darker text color */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+.elon p {
+    color: #666; /* Gray text color for description */
+    margin: 5px 0; /* Margin for spacing */
+}
+
+.elon a {
+    display: inline-block; /* Make the link block-level */
+    background-color: #007bff; /* Button color */
+    color: white; /* Text color for the button */
+    padding: 10px 15px; /* Padding inside the button */
+    border-radius: 5px; /* Rounded corners for the button */
+    text-decoration: none; /* Remove underline */
+    margin-top: 10px; /* Margin for spacing */
+    transition: background-color 0.3s; /* Transition effect */
+}
+
+.elon a:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Announcements</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'homepage' %}">Home</a></li>
+
+            <li class="dropdown">
+                <a href="#">Categories >>></a>
+                <ul class="dropdown-content">
+                    {% for c in category %}
+                    <li><a href="{% url 'category' c.id %}">{{ c.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+
+<div class="elon">
+    {%  if elon.image and elon.image.url %}
+                      <img src="{{ elon.image.url }}" alt="{{ elon.title }}">
+                      {% else %}
+                      <img src="https://lh4.googleusercontent.com/proxy/EWm9FVpPqF7N5rcraSRF-UMDuwBzfkA2tYNH73WwfdaqqrhD7V-TQL22-XP7fOgbjSp4X836b8_TVTYw1JN7bSJuUHbgtMURdiA2n-lyFKYnnpRzFzCJ72kCEw" alt="Placeholder image" height="300">
+                      {% endif %}
+
+    <h1>{{ elon.title }}</h1>
+    <h4>{{ elon.category }}</h4>
+    <p>{{ elon.description }}</p><br>
+    <div align="left">
+      <h7 align="left"> Contact -------------------- +759 955 3215 88</h7><br>
+    <h7 align="left"> Address -------------------- {{ elon.address }}</h7><br>
+    <h7 align="left"> Support -------------------- {{ elon.id }} supportelon.uz</h7><br>
+    <p>Added at: {{ elon.added_time }}</p>
+    </p>
+</div>
+
+</body>
+</html>
